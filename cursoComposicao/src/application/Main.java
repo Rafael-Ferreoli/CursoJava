@@ -1,8 +1,6 @@
 package application;
 
-import entitites.Department;
-import entitites.HourContract;
-import entitites.Worker;
+import entitites.*;
 import entititesEnum.WorkerLevel;
 
 import java.text.ParseException;
@@ -16,7 +14,22 @@ public class Main {
     public static void main(String[] args) throws ParseException {
         Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        Comment c1 = new Comment("Have a nice trip!");
+        Comment c2 = new Comment("Wow that's awesome");
+        Post p1 = new Post(sdf.parse("21/06/2018 13:05:44"),
+                "traveling to new zealand",
+                "i'm going to visit this wonderful country",
+                12);
+        p1.addComment(c1);
+        p1.addComment(c2);
+        System.out.println(p1);
+
+        
+        /*
+        //EXERCICIO 1
+
 
         System.out.print("Entre com o nome do departamento: ");
         String departmentName = sc.nextLine();
@@ -52,7 +65,7 @@ public class Main {
         System.out.println("Name: " + worker.getName());
         System.out.println("Departamento: " + worker.getDepartment().getName());
         System.out.println("Ganhos de " + monthAndYear + ": " + String.format("%.2f", worker.income(year, month)));
-
+*/
         sc.close();
     }
 }
