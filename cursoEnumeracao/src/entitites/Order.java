@@ -2,69 +2,89 @@ package entitites;
 
 import entititesEnums.OrderStatus;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
-    private Integer id;
+
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private Date moment;
     private OrderStatus status;
+    private List<OrderItem> orderItem = new ArrayList<>();
+    private Clientes clientes;
+
 
     public Order(){
 
     }
 
-    public Order(Integer id, Date moment, OrderStatus status){
-        this.id = id;
+    public Order(Date moment, OrderStatus status, Clientes clientes) {
         this.moment = moment;
         this.status = status;
+        this.clientes = clientes;
     }
 
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the moment
-     */
     public Date getMoment() {
         return moment;
     }
 
-    /**
-     * @param moment the moment to set
-     */
     public void setMoment(Date moment) {
         this.moment = moment;
     }
 
-    /**
-     * @return the status
-     */
     public OrderStatus getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" + "id=" + id + ", moment=" + moment + ", status=" + status + '}';
+    public Clientes getClientes() {
+        return clientes;
     }
 
+    public void setClientes(Clientes clientes) {
+        this.clientes = clientes;
+    }
 
+    public List<OrderItem> orderItem(){
+        return orderItem;
+    }
+
+    public void addItem(OrderItem item){
+        orderItem.add(item);
+    }
+
+    public void removeItem(OrderItem item){
+        orderItem.remove(item);
+    }
+
+    public double total() {
+        double sum = 0.0;
+        for (OrderItem item : orderItem) {
+            sum += item.subTotal();
+        }
+        return sum;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Order moment: ");
+        sb.append(sdf.format(moment) + "\n");
+        sb.append("Order status: ");
+        sb.append(status + "\n");
+        sb.append("Client: ");
+        sb.append(clientes + "\n");
+        sb.append("Order items:\n");
+        for (OrderItem item : orderItem) {
+            sb.append(item + "\n");
+        }
+        sb.append("Total price: $");
+        sb.append(String.format("%.2f", total()));
+        return sb.toString();
+    }
 }
+
